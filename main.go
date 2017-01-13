@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stinkyfingers/catchPhraseAPI/handlers"
+	"github.com/stinkyfingers/catchphraseAPI/handlers"
 )
 
 func main() {
