@@ -3,6 +3,7 @@ package db
 import (
 	"os"
 	"strings"
+	"time"
 
 	"gopkg.in/mgo.v2"
 )
@@ -14,12 +15,17 @@ func CreateSession() (*mgo.Session, error) {
 	if mu := os.Getenv("MONGO_URL"); mu != "" {
 		addrs = strings.Split(mu, ",")
 	}
+	source := os.Getenv("MONGO_ADMIN")
+	if source == "" {
+		source = "admin"
+	}
 	info := &mgo.DialInfo{
 		Addrs:    addrs,
 		Username: os.Getenv("MONGO_USER"),
 		Password: os.Getenv("MONGO_PASS"),
 		Database: DB,
-		Source:   "admin",
+		Source:   source,
+		Timeout:  time.Second,
 	}
 	return mgo.DialWithInfo(info)
 }

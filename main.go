@@ -4,7 +4,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	// "github.com/stinkyfingers/catchphraseAPI/handlers"
+
+	"github.com/stinkyfingers/catchphraseAPI/handlers"
 )
 
 func main() {
@@ -13,18 +14,16 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	// s, err := handlers.NewServer()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	s, err := handlers.NewServer()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	mux := http.NewServeMux()
-	// mux.HandleFunc("/", s.HandleStatus)
-	// mux.HandleFunc("/all", s.Cors(s.HandleAll))
-	// mux.HandleFunc("/upload", s.Cors(s.HandleUpload))
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hey"))
-	})
+	mux.HandleFunc("/", s.HandleStatus)
+	mux.HandleFunc("/all", s.Cors(s.HandleAll))
+	mux.HandleFunc("/upload", s.Cors(s.HandleUpload))
+
 	log.Print("Running on port ", port)
 	log.Fatal(http.ListenAndServe(":"+port, mux))
 }

@@ -37,7 +37,14 @@ func (s *Server) Cors(h http.HandlerFunc) http.HandlerFunc {
 }
 
 func (s *Server) HandleStatus(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("API running"))
+	msg := "DB up"
+
+	err := s.DB.Ping()
+	if err != nil {
+		msg = err.Error()
+	}
+
+	w.Write([]byte("API running \nDB Ping: " + msg))
 }
 
 func (s *Server) HandleAll(w http.ResponseWriter, r *http.Request) {
