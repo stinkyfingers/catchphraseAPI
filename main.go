@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	port := "8080"
-	if p := os.Getenv("PORT"); p != "" {
-		port = p
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
 	}
 
 	s, err := handlers.NewServer()
