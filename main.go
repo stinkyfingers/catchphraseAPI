@@ -10,7 +10,7 @@ import (
 
 func main() {
 	port := "8080"
-	if p := os.Getenv("port"); p != "" {
+	if p := os.Getenv("PORT"); p != "" {
 		port = p
 	}
 
