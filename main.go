@@ -9,10 +9,10 @@ import (
 )
 
 func main() {
-	// port := os.Getenv("PORT")
-	// if port == "" {
-	// 	port = "8080"
-	// }
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 
 	s, err := handlers.NewServer()
 	if err != nil {
@@ -20,9 +20,9 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", s.Cors(s.HandleStatus))
+	mux.HandleFunc("/", s.HandleStatus)
 	mux.HandleFunc("/all", s.Cors(s.HandleAll))
 	mux.HandleFunc("/upload", s.Cors(s.HandleUpload))
-	log.Print("Running on port ", os.Getenv("PORT"))
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), mux))
+	log.Print("Running on port ", port)
+	log.Fatal(http.ListenAndServe(":"+port, mux))
 }
