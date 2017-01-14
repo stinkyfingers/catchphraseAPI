@@ -23,5 +23,6 @@ func main() {
 	mux.HandleFunc("/", s.Cors(s.HandleStatus))
 	mux.HandleFunc("/all", s.Cors(s.HandleAll))
 	mux.HandleFunc("/upload", s.Cors(s.HandleUpload))
+	log.Print("Running on port ", port)
 	log.Fatal(http.ListenAndServe(":"+port, mux))
 }
