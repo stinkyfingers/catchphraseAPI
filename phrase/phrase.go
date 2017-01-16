@@ -33,3 +33,11 @@ func (c *Category) Insert() error {
 	c.ID = bson.NewObjectId()
 	return sess.DB(db.DB).C(collection).Insert(c)
 }
+
+func (c *Category) Remove() error {
+	sess, err := db.CreateSession()
+	if err != nil {
+		return err
+	}
+	return sess.DB(db.DB).C(collection).RemoveId(c.ID)
+}
