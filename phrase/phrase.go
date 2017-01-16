@@ -41,3 +41,11 @@ func (c *Category) Remove() error {
 	}
 	return sess.DB(db.DB).C(collection).RemoveId(c.ID)
 }
+
+func (c *Category) Find() error {
+	sess, err := db.CreateSession()
+	if err != nil {
+		return err
+	}
+	return sess.DB(db.DB).C(collection).Find(bson.M{"name": c.Name}).One(&c)
+}
