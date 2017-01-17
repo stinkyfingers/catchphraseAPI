@@ -81,13 +81,14 @@ func (s *Server) HandleUpload(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	for _, cat := range cats {
-		err = cat.Find()
+		temp := phrase.Category{Name: cat.Name}
+		err = temp.Find()
 		if err != nil && err != mgo.ErrNotFound {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if cat.ID.Valid() {
-			err = cat.Remove()
+		if temp.ID.Valid() {
+			err = temp.Remove()
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
